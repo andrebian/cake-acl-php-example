@@ -115,7 +115,6 @@
  * to the roles you defined in the roles configuration.
  */
 $config['map'] = array(
-	'User' => 'User/username',
 	'Role' => 'User/role_id',
 );
 
@@ -128,26 +127,16 @@ $config['map'] = array(
  * the roles defined in your role configuration.
  */
 $config['alias'] = array(
-	'Role/1' => 'Role/equipe-de-inovacao',
-    'Role/2' => 'Role/validador-financeiro',
-    'Role/3' => 'Role/validador-seguranca',
-    'Role/4' => 'Role/validador-qualidade',
-    'Role/5' => 'Role/gestor',
-    'Role/6' => 'Role/geral',
-    'Role/7' => 'Role/nao-cadastrado',
+	'Role/1' => 'Role/admin',
+    'Role/2' => 'Role/editor',
 );
 
 /**
  * role configuration
  */
 $config['roles'] = array(
-    'Role/equipe-de-inovacao'   => null,
-    'Role/validador-financeiro' => null,
-    'Role/validador-seguranca'  => null,
-    'Role/validador-qualidade'  => null,
-    'Role/gestor'               => null,
-    'Role/geral'                => null,
-    'Role/nao-cadastrado'       => null,
+    'Role/admin'   => null,
+    'Role/editor' => null,
 );
 
 /**
@@ -155,11 +144,10 @@ $config['roles'] = array(
  */
 $config['rules'] = array(
     'allow' => array(
-        '*' => 'Role/equipe-de-inovacao, Role/validador-financeiro, Role/validador-seguranca, Role/validador-qualidade, Role/gestor, Role/geral',
-        'controllers/pages/*' => 'Role/nao-cadastrado'
+        '*' => 'Role/admin, Role/editor',
     ),
     'deny' => array(
-        'controllers/users/(add|edit|delete)' => 'Role/validador-seguranca',
-        'controllers/users/(add|delete)' => 'Role/validador-financeiro'
+        'controllers/roles/(add|edit|delete)' => 'Role/editor',
+        'controllers/users/(add|edit|delete)' => 'Role/editor',
     ),
 );

@@ -1,11 +1,9 @@
 <?php echo $this->Form->create('User', array('id' => 'login')); ?>
 <p>
-    <label for="username" class="bebas">Login</label>
-    <?php echo $this->Form->input('email', array('label' => false, 'class' => 'radius2')); ?>
+    <?php echo $this->Form->input('email'); ?>
 </p>
 <p>
-    <label for="password" class="bebas">Senha</label>
-    <?php echo $this->Form->input('password', array('label' => false, 'class' => 'radius2')); ?>
+    <?php echo $this->Form->input('password'); ?>
 </p>
 <p>
     <?php echo $this->Form->end(__('Realizar login')); ?>

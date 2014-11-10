@@ -37,29 +37,34 @@ class AppController extends Controller
     
     public function beforeFilter()
     {
+        // Definindo o algorítmo de hash para a senha (OPCIONAL)
         $this->Auth->authenticate = array('Blowfish' => array(
                 'userModel' => 'User',
                 'fields' => array('username' => 'email')
         ));
         
+        // Informando controller/action para login
         $this->Auth->loginAction = array(
             'controller' => 'users',
             'action' => 'login'
         );
         
-        $this->Auth->authError = 'Suas permissões não concedem acesso ao recurso solicitado.';
-        
-        $this->Auth->logoutRedirect = array(
-            'controller' => 'users',
-            'action' => 'login'
-        );
+        // controller/action após realizar o login
         $this->Auth->loginRedirect = array(
             'controller' => 'pages',
             'action' => 'home');
         
+        // controller/action após realizar o logout
+        $this->Auth->logoutRedirect = array(
+            'controller' => 'users',
+            'action' => 'login'
+        );
         
-        $this->Auth->deny();
+        // Actions habilitadas para usuários não logados
         $this->Auth->allow('login', 'display', 'home');
+        
+        // Definindo uma mensagem de erro do ACL
+        $this->Auth->authError = 'Suas permissões não concedem acesso ao recurso solicitado.';
         
         if ($this->Auth->user()) {
             
@@ -76,9 +81,14 @@ class AppController extends Controller
     
     protected function isAuthorized()
     {
-        $aco = 'controllers/'.$this->params['controller'];
+
+        // verifica o recurso solicitado
+        $aco = 'controllers/' . $this->params['controller'];
+
+        //Informando qual é meu grupo
         $aro = $this->Auth->user('role_id');
-        
+
+        //Retornando a validação do privilégio solicitante - recurso/privilegio
         return $this->Acl->check($aro, $aco, $this->params['action']);
     }
 
